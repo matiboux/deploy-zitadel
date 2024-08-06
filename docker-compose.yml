@@ -11,8 +11,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: zitadel
-    networks:
-      - 'zitadel'
     healthcheck:
       test: ["CMD-SHELL", "pg_isready", "-d", "zitadel", "-U", "postgres"]
       interval: '10s'
@@ -40,10 +38,5 @@ services:
       ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: postgres
       ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE: disable
       ZITADEL_EXTERNALSECURE: false
-    networks:
-      - 'zitadel'
     ports:
       - '8080:8080'
-
-networks:
-  zitadel:

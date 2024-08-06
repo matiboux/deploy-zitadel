@@ -1,0 +1,13 @@
+# Services definition override for production
+
+services:
+
+  # Database
+  db:
+    # Deploy override
+    restart: 'always'
+
+  # Zitadel
+  zitadel:
+    # Deploy override
+    restart: 'always'

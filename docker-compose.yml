@@ -9,10 +9,10 @@ services:
     # Deploy
     command:
       - start-from-setup
-      - --masterkey
-      - ${ZITADEL_MASTER_KEY:-MasterkeyNeedsToHave32Characters}
+      - --masterkeyFromEnv
     environment:
       # Zitadel configuration
+      ZITADEL_MASTERKEY: ${ZITADEL_MASTERKEY:-MasterkeyNeedsToHave32Characters}
       ZITADEL_PORT: ${ZITADEL_PORT:-8080}
       ZITADEL_EXTERNALPORT: ${ZITADEL_EXTERNALPORT:-443}
       ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-zitadel.localhost}

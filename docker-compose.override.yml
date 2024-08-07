@@ -23,8 +23,7 @@ services:
     # Deploy override
     command:
       - start-from-init
-      - --masterkey
-      - ${ZITADEL_MASTER_KEY:-MasterkeyNeedsToHave32Characters}
+      - --masterkeyFromEnv
       - --tlsMode
       - disabled
     depends_on:

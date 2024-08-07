@@ -31,6 +31,7 @@ services:
       db:
         condition: 'service_healthy'
     environment:
+      ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-localhost}
       ZITADEL_EXTERNALPORT: ${ZITADEL_EXTERNALPORT:-8080}
       ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE:-false}
       ZITADEL_TLS_ENABLED: ${ZITADEL_TLS_ENABLED:-false}

@@ -12,6 +12,7 @@ services:
       - --masterkey
       - ${ZITADEL_MASTER_KEY:-MasterkeyNeedsToHave32Characters}
     environment:
+      ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-zitadel.localhost}
       ZITADEL_EXTERNALPORT: ${ZITADEL_EXTERNALPORT:-443}
       ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE:-true}
       ZITADEL_TLS_ENABLED: ${ZITADEL_TLS_ENABLED:-false}

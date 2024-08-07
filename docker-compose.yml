@@ -5,7 +5,7 @@ services:
   # Zitadel
   zitadel:
     # Build
-    image: ghcr.io/zitadel/zitadel:latest
+    image: ${ZITADEL_IMAGE:-ghcr.io/zitadel/zitadel:latest}
     # Deploy
     command:
       - start-from-init

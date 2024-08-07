@@ -31,10 +31,12 @@ services:
       db:
         condition: 'service_healthy'
     environment:
+      # Zitadel configuration
       ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-localhost}
       ZITADEL_EXTERNALPORT: ${ZITADEL_EXTERNALPORT:-8080}
       ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE:-false}
       ZITADEL_TLS_ENABLED: ${ZITADEL_TLS_ENABLED:-false}
+      # Database configuration
       ZITADEL_DATABASE_POSTGRES_HOST: db
       ZITADEL_DATABASE_POSTGRES_PORT: 5432
       ZITADEL_DATABASE_POSTGRES_DATABASE: zitadel_db

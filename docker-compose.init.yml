@@ -13,7 +13,9 @@ services:
       retries: 5
       start_period: '10s'
     environment:
+      # Zitadel configuration
       ZITADEL_LOGSTORE_ACCESS_STDOUT_ENABLED: ${ZITADEL_LOGS:-true}
+      # Database configuration
       ZITADEL_DATABASE_POSTGRES_ADMIN_EXISTINGDATABASE: ${DB_ADMIN_NAME:-}
       ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME: ${DB_ADMIN_USER:-}
       ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: ${DB_ADMIN_PASSWORD:-}

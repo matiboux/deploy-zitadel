@@ -12,10 +12,12 @@ services:
       - --masterkey
       - ${ZITADEL_MASTER_KEY:-MasterkeyNeedsToHave32Characters}
     environment:
+      # Zitadel configuration
       ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-zitadel.localhost}
       ZITADEL_EXTERNALPORT: ${ZITADEL_EXTERNALPORT:-443}
       ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE:-true}
       ZITADEL_TLS_ENABLED: ${ZITADEL_TLS_ENABLED:-false}
+      # Database configuration
       ZITADEL_DATABASE_POSTGRES_HOST: ${DB_HOST:-localhost}
       ZITADEL_DATABASE_POSTGRES_PORT: ${DB_PORT:-5432}
       ZITADEL_DATABASE_POSTGRES_DATABASE: ${DB_NAME:-zitadel_db}

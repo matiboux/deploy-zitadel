@@ -21,7 +21,12 @@ services:
   # Zitadel
   zitadel:
     # Deploy override
-    command: 'start-from-init --masterkey "MasterkeyNeedsToHave32Characters" --tlsMode disabled'
+    command:
+      - start-from-init
+      - --masterkey
+      - ${ZITADEL_MASTER_KEY:-MasterkeyNeedsToHave32Characters}
+      - --tlsMode
+      - disabled
     depends_on:
       db:
         condition: 'service_healthy'

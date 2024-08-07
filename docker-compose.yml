@@ -7,7 +7,10 @@ services:
     # Build
     image: ghcr.io/zitadel/zitadel:latest
     # Deploy
-    command: 'start-from-init --masterkey "MasterkeyNeedsToHave32Characters"'
+    command:
+      - start-from-init
+      - --masterkey
+      - ${ZITADEL_MASTER_KEY:-MasterkeyNeedsToHave32Characters}
     environment:
       ZITADEL_DATABASE_POSTGRES_HOST: db
       ZITADEL_DATABASE_POSTGRES_PORT: 5432

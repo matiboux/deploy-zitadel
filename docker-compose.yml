@@ -18,6 +18,8 @@ services:
       ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-zitadel.localhost}
       ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE:-true}
       ZITADEL_TLS_ENABLED: ${ZITADEL_TLS_ENABLED:-false}
+      # Zitadel system admin configuration
+      ZITADEL_SYSTEMAPIUSERS: ${ZITADEL_SYSTEMAPIUSERS:-}
       # Database configuration
       ZITADEL_DATABASE_POSTGRES_HOST: ${DB_HOST:-localhost}
       ZITADEL_DATABASE_POSTGRES_PORT: ${DB_PORT:-5432}

@@ -2,12 +2,7 @@
 
 services:
 
-  # Database
-  db:
-    # Deploy override
-    restart: 'always'
-
   # Zitadel
   zitadel:
     # Deploy override
-    restart: 'always'
+    restart: unless-stopped

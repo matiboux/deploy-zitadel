@@ -27,4 +27,4 @@ services:
       ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE: ${DB_ADMIN_SSL_MODE:-disable}
     ports:
       # HTTP
-      - ${HTTP_PORT:-443}:${HTTP_DOCKER_PORT:-443}
+      - ${HTTP_PORT:-443}:${ZITADEL_EXTERNALPORT:-443}

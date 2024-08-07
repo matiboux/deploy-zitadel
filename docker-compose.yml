@@ -13,8 +13,9 @@ services:
       - ${ZITADEL_MASTER_KEY:-MasterkeyNeedsToHave32Characters}
     environment:
       # Zitadel configuration
-      ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-zitadel.localhost}
+      ZITADEL_PORT: ${ZITADEL_PORT:-8080}
       ZITADEL_EXTERNALPORT: ${ZITADEL_EXTERNALPORT:-443}
+      ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-zitadel.localhost}
       ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE:-true}
       ZITADEL_TLS_ENABLED: ${ZITADEL_TLS_ENABLED:-false}
       # Database configuration
@@ -26,4 +27,4 @@ services:
       ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE: ${DB_SSL_MODE:-disable}
     ports:
       # HTTP
-      - ${HTTP_PORT:-443}:${ZITADEL_EXTERNALPORT:-443}
+      - ${HTTP_PORT:-443}:${ZITADEL_PORT:-8080}

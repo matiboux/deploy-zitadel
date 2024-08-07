@@ -32,8 +32,8 @@ services:
         condition: 'service_healthy'
     environment:
       # Zitadel configuration
-      ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-localhost}
       ZITADEL_EXTERNALPORT: ${ZITADEL_EXTERNALPORT:-8080}
+      ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-localhost}
       ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE:-false}
       ZITADEL_TLS_ENABLED: ${ZITADEL_TLS_ENABLED:-false}
       # Database configuration
@@ -49,4 +49,4 @@ services:
     ports: !reset null
     ports:
       # HTTP
-      - ${HTTP_PORT:-80}:${ZITADEL_EXTERNALPORT:-8080}
+      - ${HTTP_PORT:-80}:${ZITADEL_PORT:-8080}

@@ -8,7 +8,7 @@ services:
     image: ${ZITADEL_IMAGE:-ghcr.io/zitadel/zitadel:latest}
     # Deploy
     command:
-      - start-from-setup
+      - start-from-init
       - --masterkeyFromEnv
     environment:
       # Zitadel configuration

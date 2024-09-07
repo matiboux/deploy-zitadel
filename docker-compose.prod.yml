@@ -2,7 +2,25 @@
 
 services:
 
+  # Database
+  db:
+    # Extend
+    extends:
+      file: docker-compose-db.yml
+      service: db
+
   # Zitadel
   zitadel:
     # Deploy override
     restart: unless-stopped
+    depends_on:
+      db:
+        condition: 'service_healthy'
+    environment:
+      # Database configuration
+      ZITADEL_DATABASE_POSTGRES_HOST: db
+      ZITADEL_DATABASE_POSTGRES_PORT: 5432
+      ZITADEL_DATABASE_POSTGRES_DATABASE: zitadel_db
+      ZITADEL_DATABASE_POSTGRES_USER_USERNAME: postgres
+      ZITADEL_DATABASE_POSTGRES_USER_PASSWORD: postgres
+      ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE: disable

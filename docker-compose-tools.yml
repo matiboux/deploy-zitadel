@@ -1,0 +1,15 @@
+# Services definition for building & deploying
+
+services:
+
+  # Zitadel Tools
+  tools:
+    # Build
+    image: ${IMAGES_PREFIX:-app}-tools:${DOCKER_TAG:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: app_zitadel_tools
+    # Deploy
+    volumes:
+      - .:/app

@@ -1,8 +1,4 @@
 https://zitadel-127.0.0.1.sslip.io {
 	tls /etc/certs/selfsigned.crt /etc/certs/selfsigned.key
-	reverse_proxy https://zitadel:8080 {
-		transport http {
-			tls_insecure_skip_verify
-		}
-	}
+	reverse_proxy http://zitadel:8080
 }

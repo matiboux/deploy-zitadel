@@ -9,23 +9,67 @@ services:
       file: docker-compose-db.yml
       service: db
 
-  # Zitadel
-  zitadel:
-    # Deploy override
-    command:
-      - start-from-init
-      - --masterkeyFromEnv
-      - --tlsMode
-      - disabled
+  # Zitadel Init
+  zitadel-init:
+    # Build
+    image: ${ZITADEL_IMAGE:-ghcr.io/zitadel/zitadel:latest}
+    # Deploy
+    user: ${UID:-1000}
+    command: init --config /zitadel.yaml
     depends_on:
       db:
         condition: service_healthy
     environment:
       # Zitadel configuration
-      ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-zitadel.localhost}
-      ZITADEL_EXTERNALPORT: ${HTTP_PORT:-8080}
-      ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE:-false}
+      ZITADEL_EXTERNALDOMAIN: zitadel-127.0.0.1.sslip.io
+      ZITADEL_EXTERNALPORT: '' # ${HTTP_PORT:-443}
+      ZITADEL_EXTERNALSECURE: '' # ${ZITADEL_EXTERNALSECURE:-false}
+      ZITADEL_TLS_ENABLED: '' # ${ZITADEL_TLS_ENABLED:-false}
+      ZITADEL_LOGSTORE_ACCESS_STDOUT_ENABLED: true
+      ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED: false
+      # Database configuration
+      ZITADEL_DATABASE_POSTGRES_HOST: db
+      ZITADEL_DATABASE_POSTGRES_PORT: 5432
+      ZITADEL_DATABASE_POSTGRES_DATABASE: zitadel_db
+      ZITADEL_DATABASE_POSTGRES_USER_USERNAME: zitadel_db_user
+      ZITADEL_DATABASE_POSTGRES_USER_PASSWORD: zitadel_db_password
+      ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE: disable
+      ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME: postgres
+      ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: postgres
+      ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE: disable
+    healthcheck:
+      test: [ "CMD", "/app/zitadel", "ready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # Zitadel
+  zitadel:
+    # Deploy override
+    user: ${UID:-1000}
+    command:
+      - start-from-setup
+      - --init-projections
+      - --masterkeyFromEnv
+      - --config
+      - /zitadel.yaml
+      - --steps
+      - /zitadel.yaml
+    depends_on:
+      db:
+        condition: service_healthy
+      zitadel-init:
+        condition: service_completed_successfully
+    environment:
+      # Zitadel configuration
+      ZITADEL_PORT: 8080
+      ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-zitadel-127.0.0.1.sslip.io}
+      ZITADEL_EXTERNALPORT: ${HTTP_PORT:-443}
+      ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE:-true}
       ZITADEL_TLS_ENABLED: ${ZITADEL_TLS_ENABLED:-false}
+      ZITADEL_LOGSTORE_ACCESS_STDOUT_ENABLED: true
+      ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED: false
       ZITADEL_SYSTEMAPIUSERS: >
         {
           "system-test-user": {
@@ -42,9 +86,27 @@ services:
       ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME: postgres
       ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: postgres
       ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE: disable
+    healthcheck:
+      test: [ "CMD", "/app/zitadel", "ready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     ports: !reset null
-    ports:
-      # HTTP
-      - ${HTTP_PORT:-8080}:${DOCKER_PORT:-8080}
     volumes:
       - ./zitadel-config/system-test-user.pub:/system-test-user.pub:ro
+
+  # Caddy Proxy
+  proxy:
+    # Build
+    image: caddy:latest
+    # Deploy
+    volumes:
+      - ./caddy-config/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy-config/selfsigned.crt:/etc/certs/selfsigned.crt:ro
+      - ./caddy-config/selfsigned.key:/etc/certs/selfsigned.key:ro
+    ports:
+      - ${HTTP_PORT:-443}:443 # HTTPS
+    depends_on:
+      zitadel:
+        condition: service_healthy

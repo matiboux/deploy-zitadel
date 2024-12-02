@@ -5,10 +5,10 @@
 
 # Temporary files
 ._*
-*~
 *.cache
 *.log*
 *.swp
+*~
 
 # System files
 .DS_Store
@@ -29,3 +29,8 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# -- Application rules:
+
+# Config
+/zitadel-config/*.jwt

@@ -5,10 +5,10 @@ Docker configuration to deploy Zitadel.
 
 ## Information
 
-Consider Zitadel locally deployed on `http://zitadel.localhost`.
+Consider Zitadel locally deployed on `http://zitadel-127.0.0.1.sslip.io`.
 
 After deployment, default user is:
-- Email: `zitadel-admin@zitadel.zitadel.localhost`
+- Email: `zitadel-admin@zitadel.zitadel-127.0.0.1.sslip.io`
 - Password: `Password1!`
 
 After first login, you will be asked to change the password.

@@ -22,9 +22,6 @@ services:
     environment:
       # Zitadel configuration
       ZITADEL_EXTERNALDOMAIN: zitadel-127.0.0.1.sslip.io
-      ZITADEL_EXTERNALPORT: '' # ${HTTP_PORT:-443}
-      ZITADEL_EXTERNALSECURE: '' # ${ZITADEL_EXTERNALSECURE:-false}
-      ZITADEL_TLS_ENABLED: '' # ${ZITADEL_TLS_ENABLED:-false}
       ZITADEL_LOGSTORE_ACCESS_STDOUT_ENABLED: true
       ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED: false
       # Database configuration

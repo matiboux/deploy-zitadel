@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # Get current directory
 DIR=''
 if [ $# -gt 0 ]; then
@@ -15,9 +17,26 @@ if [ ! -d "$DIR" ]; then
 	exit 1
 fi
 
-# Generate SSL certificates
+# Generate SSL certificates for zitadel-127.0.0.1.sslip.io
+mkdir -p "${DIR}/zitadel"
 openssl req -x509 -batch \
 	-subj "/CN=zitadel-127.0.0.1.sslip.io/O=ZITADEL Demo" \
 	-nodes -newkey rsa:2048 \
-	-keyout "${DIR}/selfsigned.key" \
-	-out "${DIR}/selfsigned.crt"
+	-keyout "${DIR}/zitadel/selfsigned.key" \
+	-out "${DIR}/zitadel/selfsigned.crt"
+
+# Generate SSL certificates for alpha-127.0.0.1.sslip.io
+mkdir -p "${DIR}/alpha"
+openssl req -x509 -batch \
+	-subj "/CN=alpha-127.0.0.1.sslip.io/O=ZITADEL Demo" \
+	-nodes -newkey rsa:2048 \
+	-keyout "${DIR}/alpha/selfsigned.key" \
+	-out "${DIR}/alpha/selfsigned.crt"
+
+# Generate SSL certificates for beta-127.0.0.1.sslip.io
+mkdir -p "${DIR}/beta"
+openssl req -x509 -batch \
+	-subj "/CN=beta-127.0.0.1.sslip.io/O=ZITADEL Demo" \
+	-nodes -newkey rsa:2048 \
+	-keyout "${DIR}/beta/selfsigned.key" \
+	-out "${DIR}/beta/selfsigned.crt"

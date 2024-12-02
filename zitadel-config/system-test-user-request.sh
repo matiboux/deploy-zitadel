@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # Check the curl command is available
 if ! command -v curl > /dev/null; then
 	echo ''

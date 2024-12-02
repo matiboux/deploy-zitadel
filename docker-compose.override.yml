@@ -100,8 +100,12 @@ services:
     # Deploy
     volumes:
       - ./caddy-config/Caddyfile:/etc/caddy/Caddyfile:ro
-      - ./caddy-config/selfsigned.crt:/etc/certs/selfsigned.crt:ro
-      - ./caddy-config/selfsigned.key:/etc/certs/selfsigned.key:ro
+      - ./caddy-config/zitadel/selfsigned.crt:/etc/certs/zitadel/selfsigned.crt:ro
+      - ./caddy-config/zitadel/selfsigned.key:/etc/certs/zitadel/selfsigned.key:ro
+      - ./caddy-config/alpha/selfsigned.crt:/etc/certs/alpha/selfsigned.crt:ro
+      - ./caddy-config/alpha/selfsigned.key:/etc/certs/alpha/selfsigned.key:ro
+      - ./caddy-config/beta/selfsigned.crt:/etc/certs/beta/selfsigned.crt:ro
+      - ./caddy-config/beta/selfsigned.key:/etc/certs/beta/selfsigned.key:ro
     ports:
       - ${HTTP_PORT:-443}:443 # HTTPS
     depends_on:

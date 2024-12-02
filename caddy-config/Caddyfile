@@ -1,4 +1,14 @@
 https://zitadel-127.0.0.1.sslip.io {
-	tls /etc/certs/selfsigned.crt /etc/certs/selfsigned.key
+	tls /etc/certs/zitadel/selfsigned.crt /etc/certs/zitadel/selfsigned.key
+	reverse_proxy http://zitadel:8080
+}
+
+https://alpha-127.0.0.1.sslip.io {
+	tls /etc/certs/alpha/selfsigned.crt /etc/certs/alpha/selfsigned.key
+	reverse_proxy http://zitadel:8080
+}
+
+https://beta-127.0.0.1.sslip.io {
+	tls /etc/certs/beta/selfsigned.crt /etc/certs/beta/selfsigned.key
 	reverse_proxy http://zitadel:8080
 }

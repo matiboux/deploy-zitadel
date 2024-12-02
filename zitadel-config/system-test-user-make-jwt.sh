@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # Check the zitadel-tools command is available
 if ! command -v zitadel-tools > /dev/null; then
 	echo ''

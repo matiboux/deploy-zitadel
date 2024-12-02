@@ -1,5 +1,14 @@
 #!/bin/sh
 
+# Check the zitadel-tools command is available
+if ! command -v zitadel-tools > /dev/null; then
+	echo ''
+	echo "The 'zitadel-tools' command is not available! Please install it:"
+	echo "go install github.com/zitadel/zitadel-tools@latest"
+	echo ''
+	exit 1
+fi
+
 # Get current directory
 DIR=''
 if [ $# -gt 0 ]; then

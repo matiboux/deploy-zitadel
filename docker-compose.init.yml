@@ -8,10 +8,10 @@ services:
     command: [ "init", "--config", "/zitadel.yaml" ]
     healthcheck:
       test: [ "CMD", "/app/zitadel", "ready" ]
-      interval: '10s'
-      timeout: '5s'
+      interval: 10s
+      timeout: 5s
       retries: 5
-      start_period: '10s'
+      start_period: 10s
     environment:
       # Zitadel configuration
       ZITADEL_LOGSTORE_ACCESS_STDOUT_ENABLED: ${ZITADEL_LOGS:-true}

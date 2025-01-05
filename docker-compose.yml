@@ -43,8 +43,13 @@ services:
         condition: service_completed_successfully
     user: ${USER_ID:-1000}
     command:
-      - start-from-init
+      - start-from-setup
+      - --init-projections
       - --masterkeyFromEnv
+      - --config
+      - /zitadel.yaml
+      - --steps
+      - /zitadel.yaml
     environment:
       # Zitadel configuration
       ZITADEL_MASTERKEY: ${ZITADEL_MASTERKEY:-MasterkeyNeedsToHave32Characters}
@@ -53,6 +58,8 @@ services:
       ZITADEL_EXTERNALPORT: ${HTTP_PORT:-443}
       ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE:-true}
       ZITADEL_TLS_ENABLED: ${ZITADEL_TLS_ENABLED:-false}
+      ZITADEL_LOGSTORE_ACCESS_STDOUT_ENABLED: ${ZITADEL_LOGSTORE_ACCESS_STDOUT_ENABLED:-true}
+      ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED: ${ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED:-false}
       # Zitadel system admin configuration
       ZITADEL_SYSTEMAPIUSERS: ${ZITADEL_SYSTEMAPIUSERS:-}
       # Database configuration
@@ -67,6 +74,12 @@ services:
       ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME: ${DB_ADMIN_USER:-postgres}
       ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: ${DB_ADMIN_PASSWORD:-postgres_password}
       ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE: ${DB_ADMIN_SSL_MODE:-require}
+    healthcheck:
+      test: [ "CMD", "/app/zitadel", "ready" ]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
 
   # Caddy Proxy
   proxy:

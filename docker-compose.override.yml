@@ -8,37 +8,32 @@ services:
     extends:
       file: docker-compose-db.yml
       service: db
+    # Deploy override
+    environment:
+      POSTGRES_USER: ${DB_ADMIN_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_ADMIN_PASSWORD:-postgres_password}
 
   # Zitadel Init
   zitadel-init:
-    # Build
-    image: ${ZITADEL_IMAGE:-ghcr.io/zitadel/zitadel:latest}
-    # Deploy
-    user: ${UID:-1000}
-    command: init --config /zitadel.yaml
+    # Deploy override
     depends_on:
       db:
         condition: service_healthy
     environment:
-      # Zitadel configuration
-      ZITADEL_EXTERNALDOMAIN: zitadel-127.0.0.1.sslip.io
-      ZITADEL_LOGSTORE_ACCESS_STDOUT_ENABLED: true
-      ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED: false
-      # Database configuration
-      ZITADEL_DATABASE_POSTGRES_HOST: db
-      ZITADEL_DATABASE_POSTGRES_PORT: 5432
-      ZITADEL_DATABASE_POSTGRES_DATABASE: zitadel_db
-      ZITADEL_DATABASE_POSTGRES_USER_USERNAME: zitadel_db_user
-      ZITADEL_DATABASE_POSTGRES_USER_PASSWORD: zitadel_db_password
-      ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE: disable
-      ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME: postgres
-      ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: postgres_password
-      ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE: disable
+      # Zitadel configuration override
+      ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-zitadel-127.0.0.1.sslip.io}
+      # Database configuration override
+      ZITADEL_DATABASE_POSTGRES_HOST: ${DB_HOST:-db}
+      ZITADEL_DATABASE_POSTGRES_PORT: ${DB_PORT:-5432}
+      ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE: ${DB_SSL_MODE:-disable}
+      # Database init configuration
+      ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME: ${DB_ADMIN_USER:-postgres}
+      ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: ${DB_ADMIN_PASSWORD:-postgres_password}
+      ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE: ${DB_ADMIN_SSL_MODE:-disable}
 
   # Zitadel
   zitadel:
     # Deploy override
-    user: ${UID:-1000}
     command:
       - start-from-setup
       - --init-projections
@@ -50,8 +45,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      zitadel-init:
-        condition: service_completed_successfully
     environment:
       # Zitadel configuration
       ZITADEL_PORT: 8080

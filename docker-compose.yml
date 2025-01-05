@@ -10,8 +10,6 @@ services:
     user: ${USER_ID:-1000}
     command:
       - init
-      - --config
-      - /zitadel.yaml
     depends_on:
       db:
         condition: service_healthy
@@ -46,10 +44,6 @@ services:
       - start-from-setup
       - --init-projections
       - --masterkeyFromEnv
-      - --config
-      - /zitadel.yaml
-      - --steps
-      - /zitadel.yaml
     environment:
       # Zitadel configuration
       ZITADEL_MASTERKEY: ${ZITADEL_MASTERKEY:-MasterkeyNeedsToHave32Characters}

@@ -17,8 +17,9 @@ FROM golang_upstream AS app_zitadel_tools
 # Create app directory
 WORKDIR /app
 
-# Install Zitadel tools
+# Install Zitadel tools (`zitadel-tools`)
 RUN go install github.com/zitadel/zitadel-tools@latest
 
-ENTRYPOINT [ "zitadel-tools" ]
+COPY --link --chmod=755 ./docker/tools-entrypoint.sh /usr/local/bin/app-entrypoint
+ENTRYPOINT [ "app-entrypoint" ]
 CMD ["--help"]

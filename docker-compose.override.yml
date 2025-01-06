@@ -20,8 +20,19 @@ services:
       db:
         condition: service_healthy
     environment:
-      # Zitadel configuration override
-      ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-zitadel-127.0.0.1.sslip.io}
+      # Database configuration override
+      ZITADEL_DATABASE_POSTGRES_HOST: ${DB_HOST:-db}
+      ZITADEL_DATABASE_POSTGRES_PORT: ${DB_PORT:-5432}
+      ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE: ${DB_SSL_MODE:-disable}
+      # Database init configuration override
+      ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME: ${DB_ADMIN_USER:-postgres}
+      ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: ${DB_ADMIN_PASSWORD:-postgres_password}
+      ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE: ${DB_ADMIN_SSL_MODE:-disable}
+
+  # Zitadel Setup
+  zitadel-setup:
+    # Deploy override
+    environment:
       # Database configuration override
       ZITADEL_DATABASE_POSTGRES_HOST: ${DB_HOST:-db}
       ZITADEL_DATABASE_POSTGRES_PORT: ${DB_PORT:-5432}

@@ -1,5 +1,4 @@
 #!/bin/sh
-
 set -e
 
 # Check the zitadel-tools command is available
@@ -19,7 +18,7 @@ if [ $# -gt 0 ]; then
 	DIR="${DIR%/}"
 	shift
 else
-	DIR="$(pwd)"
+	DIR="$(pwd)/zitadel-config"
 fi
 if [ ! -d "$DIR" ]; then
 	echo "Directory '$DIR' does not exist"

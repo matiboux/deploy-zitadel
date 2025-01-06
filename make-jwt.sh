@@ -10,7 +10,7 @@ if ! command -v zitadel-tools > /dev/null; then
 	exit 1
 fi
 
-# Get current directory
+# Get Zitadel config directory
 DIR=''
 if [ $# -gt 0 ]; then
 	DIR="$1"

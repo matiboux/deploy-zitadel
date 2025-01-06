@@ -1,5 +1,4 @@
 #!/bin/sh
-
 set -e
 
 # Check the curl command is available
@@ -10,7 +9,7 @@ if ! command -v curl > /dev/null; then
 	exit 1
 fi
 
-# Get current directory
+# Get Zitadel config directory
 DIR=''
 if [ $# -gt 0 ]; then
 	DIR="$1"
@@ -18,7 +17,7 @@ if [ $# -gt 0 ]; then
 	DIR="${DIR%/}"
 	shift
 else
-	DIR="$(pwd)"
+	DIR="$(pwd)/zitadel-config"
 fi
 if [ ! -d "$DIR" ]; then
 	echo "Directory '$DIR' does not exist"
@@ -33,6 +32,6 @@ BEARER_TOKEN=$(cat "${DIR}/system-test-user.jwt")
 
 # Request with the system test user JWT token
 curl --request POST \
-  -k --url "https://${CUSTOM_DOMAIN}/system/v1/instances/_search" \
-  --header "Authorization: Bearer ${BEARER_TOKEN}" \
-  --header 'Content-Type: application/json'
+	-k --url "https://${CUSTOM_DOMAIN}/system/v1/instances/_search" \
+	--header "Authorization: Bearer ${BEARER_TOKEN}" \
+	--header 'Content-Type: application/json'
